@@ -51,7 +51,9 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  User: 'User'
+  User: 'User',
+  Snippet: 'Snippet',
+  SnippetVersion: 'SnippetVersion'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -73,10 +75,39 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 export const UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
-  name: 'name'
+  password: 'password',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const SnippetScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  content: 'content',
+  language: 'language',
+  isPublic: 'isPublic',
+  authorId: 'authorId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SnippetScalarFieldEnum = (typeof SnippetScalarFieldEnum)[keyof typeof SnippetScalarFieldEnum]
+
+
+export const SnippetVersionScalarFieldEnum = {
+  id: 'id',
+  snippetId: 'snippetId',
+  title: 'title',
+  content: 'content',
+  language: 'language',
+  createdAt: 'createdAt'
+} as const
+
+export type SnippetVersionScalarFieldEnum = (typeof SnippetVersionScalarFieldEnum)[keyof typeof SnippetVersionScalarFieldEnum]
 
 
 export const SortOrder = {

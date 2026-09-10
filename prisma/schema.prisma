@@ -12,10 +12,37 @@ datasource db {
   provider = "postgresql"
 }
 
+model User {
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
+  password  String
+  name      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  snippets  Snippet[]
+}
 
-model User { 
-  id    Int     @id @default(autoincrement()) 
-  email String  @unique
-  name  String?
+model Snippet {
+  id       Int     @id @default(autoincrement())
+  title    String
+  content  String
+  language String?
+  isPublic Boolean @default(false)
+  authorId Int
+  author   User    @relation(fields: [authorId], references: [id])
 
-} 
+  versions  SnippetVersion[]
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+}
+
+model SnippetVersion {
+  id        Int     @id @default(autoincrement())
+  snippetId Int
+  title     String
+  content   String
+  language  String?
+
+  snippet   Snippet  @relation(fields: [snippetId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}

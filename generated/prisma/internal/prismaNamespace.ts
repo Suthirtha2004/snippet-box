@@ -397,7 +397,9 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 
 export const ModelName = {
-  User: 'User'
+  User: 'User',
+  Snippet: 'Snippet',
+  SnippetVersion: 'SnippetVersion'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -413,7 +415,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user"
+    modelProps: "user" | "snippet" | "snippetVersion"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -491,6 +493,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Snippet: {
+      payload: Prisma.$SnippetPayload<ExtArgs>
+      fields: Prisma.SnippetFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SnippetFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SnippetPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SnippetFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SnippetPayload>
+        }
+        findFirst: {
+          args: Prisma.SnippetFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SnippetPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SnippetFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SnippetPayload>
+        }
+        findMany: {
+          args: Prisma.SnippetFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SnippetPayload>[]
+        }
+        create: {
+          args: Prisma.SnippetCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SnippetPayload>
+        }
+        createMany: {
+          args: Prisma.SnippetCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SnippetCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SnippetPayload>[]
+        }
+        delete: {
+          args: Prisma.SnippetDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SnippetPayload>
+        }
+        update: {
+          args: Prisma.SnippetUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SnippetPayload>
+        }
+        deleteMany: {
+          args: Prisma.SnippetDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SnippetUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SnippetUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SnippetPayload>[]
+        }
+        upsert: {
+          args: Prisma.SnippetUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SnippetPayload>
+        }
+        aggregate: {
+          args: Prisma.SnippetAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSnippet>
+        }
+        groupBy: {
+          args: Prisma.SnippetGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SnippetGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SnippetCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SnippetCountAggregateOutputType> | number
+        }
+      }
+    }
+    SnippetVersion: {
+      payload: Prisma.$SnippetVersionPayload<ExtArgs>
+      fields: Prisma.SnippetVersionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SnippetVersionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SnippetVersionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SnippetVersionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SnippetVersionPayload>
+        }
+        findFirst: {
+          args: Prisma.SnippetVersionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SnippetVersionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SnippetVersionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SnippetVersionPayload>
+        }
+        findMany: {
+          args: Prisma.SnippetVersionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SnippetVersionPayload>[]
+        }
+        create: {
+          args: Prisma.SnippetVersionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SnippetVersionPayload>
+        }
+        createMany: {
+          args: Prisma.SnippetVersionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SnippetVersionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SnippetVersionPayload>[]
+        }
+        delete: {
+          args: Prisma.SnippetVersionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SnippetVersionPayload>
+        }
+        update: {
+          args: Prisma.SnippetVersionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SnippetVersionPayload>
+        }
+        deleteMany: {
+          args: Prisma.SnippetVersionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SnippetVersionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SnippetVersionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SnippetVersionPayload>[]
+        }
+        upsert: {
+          args: Prisma.SnippetVersionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SnippetVersionPayload>
+        }
+        aggregate: {
+          args: Prisma.SnippetVersionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSnippetVersion>
+        }
+        groupBy: {
+          args: Prisma.SnippetVersionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SnippetVersionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SnippetVersionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SnippetVersionCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -533,10 +683,39 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 export const UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
-  name: 'name'
+  password: 'password',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const SnippetScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  content: 'content',
+  language: 'language',
+  isPublic: 'isPublic',
+  authorId: 'authorId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SnippetScalarFieldEnum = (typeof SnippetScalarFieldEnum)[keyof typeof SnippetScalarFieldEnum]
+
+
+export const SnippetVersionScalarFieldEnum = {
+  id: 'id',
+  snippetId: 'snippetId',
+  title: 'title',
+  content: 'content',
+  language: 'language',
+  createdAt: 'createdAt'
+} as const
+
+export type SnippetVersionScalarFieldEnum = (typeof SnippetVersionScalarFieldEnum)[keyof typeof SnippetVersionScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -594,6 +773,27 @@ export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 
  * Reference to a field of type 'String[]'
  */
 export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>
+    
+
+
+/**
+ * Reference to a field of type 'DateTime'
+ */
+export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+/**
+ * Reference to a field of type 'DateTime[]'
+ */
+export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -762,6 +962,8 @@ export interface PrismaClientOptionsWithAdapter extends PrismaClientBaseOptions 
 export type PrismaClientOptions = PrismaClientOptionsWithAccelerateUrl | PrismaClientOptionsWithAdapter
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
+  snippet?: Prisma.SnippetOmit
+  snippetVersion?: Prisma.SnippetVersionOmit
 }
 
 /* Types for Logging */
