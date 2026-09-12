@@ -95,4 +95,51 @@ const getOneSnippet = async(req:Request,res:Response)=>{
     }
 }
 
-export {createSnippet,getSnippet,getOneSnippet};
+const deleteSnippet = async(req : Request,res : Response)=>{
+    try{
+
+        const snipId = Number(req.params.id);
+        if(!req.user){
+            return res.status(401).json({
+                message : "Unauthorized access"
+            });
+        }
+
+        const snipData = await prisma.snippet.findFirst({
+            where:{
+                id: snipId,
+                authorId : req.user?.id
+            }
+        });
+
+        if(!snipData){
+            return res.status(404).json({
+                message : "No Snippets Found"
+            });
+        }
+
+        await prisma.snippet.delete({
+            where:{
+                id : snipId
+            }
+        });
+
+        return res.status(201).json({
+            message : "Snippet Deleted successfully"
+        });
+    }
+    catch(error){
+        console.log(error);
+    }
+}
+
+const updateSnippet = async(req:Request,res:Response)=>{
+    try{
+
+    }
+    catch(error){
+        console.log(error);
+    }
+}
+
+export {createSnippet,getSnippet,getOneSnippet,deleteSnippet};
