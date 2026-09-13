@@ -135,11 +135,102 @@ const deleteSnippet = async(req : Request,res : Response)=>{
 
 const updateSnippet = async(req:Request,res:Response)=>{
     try{
+        if(!req.user){
+            return res.status(401).json({
+                message : "User unauthorized",
+            })
+        }
 
+        const snipId = Number(req.params.id);
+
+        //Fetch the snippet
+        const snipData = await prisma.snippet.findFirst({
+            where:{
+                id : snipId,
+                authorId : req.user.id
+            }
+        })
+
+        if(!snipData){
+            return res.status(404).json({
+                message : "Snippet not found"
+            })
+        }
+        //Create a transaction - Updating the snippet version as well as creating a version
+
+        const updatedSnip = await prisma.$transaction(async(tx)=>{
+
+            //Save the old snippet as version
+            await tx.snippetVersion.create({
+                data:{
+                    snippetId : snipData?.id,
+                    title : snipData?.title,
+                    content : snipData?.content,
+                    language : snipData?.language,
+                }
+            });
+
+            //Update the current snippet 
+            const updated = await prisma.snippet.update({
+                where:{
+                    id : snipData.id
+                },
+                data : req.body
+            });
+
+            return updated;
+        })
+
+        if(updatedSnip){
+            return res.status(201).json({
+                message : "Snippet updated successfully",
+                data : updatedSnip
+            });
+        }
     }
     catch(error){
         console.log(error);
     }
 }
 
-export {createSnippet,getSnippet,getOneSnippet,deleteSnippet};
+//Restore versions and get particular versions
+
+const getSnippetVersion = async(req:Request,res:Response)=>{
+    try{
+
+        if(!req.user){
+            return res.status(401).json({
+                message : "User unauthorized"
+            });
+        }
+        
+        const verId = Number(req.params.versionId);
+        const snipVersion = await prisma.snippetVersion.findFirst({
+            where:{
+                id : verId,
+                snippet:{
+                    authorId : req.user.id
+                }
+            }
+        });
+
+        if(snipVersion){
+            return res.status(201).json({
+                message : "Version fetched successfully",
+                data : snipVersion
+            })
+        }
+
+    }catch(error){
+        console.log(error);
+    }
+}
+
+const restoreSnippet = async(req:Request,res:Response)=>{
+    try{
+
+    }catch(error){
+        console.log(error)
+    }
+}
+export {createSnippet,getSnippet,getOneSnippet,deleteSnippet,updateSnippet,getSnippetVersion};

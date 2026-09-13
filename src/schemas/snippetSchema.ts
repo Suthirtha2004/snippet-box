@@ -13,3 +13,5 @@ const updateSnippetSchema = z.object({
     language : z.string().optional(),
     isPublic : z.string().optional(),
 });
+
+export {createSnippetSchema,updateSnippetSchema};
