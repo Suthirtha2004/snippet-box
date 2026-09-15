@@ -2,7 +2,7 @@ import express from "express";
 import { validateRequest } from "../middleware/validateRequest.js";
 import authMiddleware from "../middleware/authMiddleware.js";
 import { createSnippetSchema, updateSnippetSchema } from "../schemas/snippetSchema.js";
-import { createSnippet, getOneSnippet, getSnippet, updateSnippet } from "../controllers/snippetController.js";
+import { createSnippet, deleteSnippet, getOneSnippet, getSnippet, getSnippetVersion, restoreSnippet, updateSnippet } from "../controllers/snippetController.js";
 
 const router = express.Router();
 
@@ -30,6 +30,25 @@ router.patch('/update',
               updateSnippet
 )
 
-router.p
+router.delete('/delete/:id',
+                authMiddleware,
+                deleteSnippet
+)
 
-export router;
+router.get('/fetchVersion/:versionId',
+            authMiddleware,
+            getSnippetVersion
+)
+
+router.post('/:id/versions/:versionId/restore',
+             authMiddleware,
+             validateRequest(updateSnippetSchema),
+             restoreSnippet
+            )
+
+
+
+
+
+
+export default router;

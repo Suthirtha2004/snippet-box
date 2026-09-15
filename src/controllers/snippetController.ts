@@ -1,3 +1,4 @@
+import { version } from "node:os";
 import {prisma} from "../../lib/prisma.js";
 import type { Request,Response } from "express";
 
@@ -228,9 +229,76 @@ const getSnippetVersion = async(req:Request,res:Response)=>{
 
 const restoreSnippet = async(req:Request,res:Response)=>{
     try{
+        if(!req.user)
+            return res.status(401).json({
+                message : "Unauthorized access"
+        })
+
+        const verId = Number(req.params.versionId);
+        const snipId = Number(req.params.id);
+
+        const snipVersion = await prisma.snippetVersion.findFirst({
+            where :{
+                id : verId,
+                authorId : req.user.id
+            }
+        });
+
+        const snipData = await prisma.snippet.findFirst({
+            where:{
+                id : snipId,
+                authorId : req.user.id
+            }
+        });
+
+        if(!snipData){
+            return res.status(404).json({
+                message : "Snippet not found"
+            });
+        }
+
+        if(!snipVersion){
+            return res.status(404).json({
+                message : "Snippet Version not found"
+            });
+        }
+
+        const restoreSnip = await prisma.$transaction(async(tx)=>{
+
+            //Save the current version
+            await tx.snippetVersion.create({
+                data:{
+                    snippetId : snipData.id,
+                    title : snipData.title,
+                    content : snipData.content,
+                    language : snipData.language
+                }
+            });
+
+            const restored = await tx.snippet.update({
+                where :{
+                    id : snipData.id
+                },
+                data:{
+                    title : snipVersion.title,
+                    content : snipVersion.content,
+                    language : snipVersion.language
+                }
+            });
+
+            return restored;
+        });
+
+        if(restoreSnip){
+            return res.status(201).json({
+                message : "Restored Snippet Version",
+                data : restoreSnip
+            });
+        }
 
     }catch(error){
         console.log(error)
     }
 }
-export {createSnippet,getSnippet,getOneSnippet,deleteSnippet,updateSnippet,getSnippetVersion};
+
+export {createSnippet,getSnippet,getOneSnippet,deleteSnippet,updateSnippet,getSnippetVersion,restoreSnippet};
