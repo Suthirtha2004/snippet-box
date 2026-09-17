@@ -4,43 +4,43 @@ import authMiddleware from "../middleware/authMiddleware.js";
 import { createSnippetSchema, updateSnippetSchema } from "../schemas/snippetSchema.js";
 import { createSnippet, deleteSnippet, getOneSnippet, getSnippet, getSnippetVersion, restoreSnippet, updateSnippet } from "../controllers/snippetController.js";
 
-const router = express.Router();
+const router2 = express.Router();
 
 
 
-router.post('/create',
+router2.post('/create',
             authMiddleware,
             validateRequest(createSnippetSchema),
             createSnippet
         )
 
-router.get('/fetch',
+router2.get('/fetch',
             authMiddleware,
             getSnippet
 )        
 
-router.get('/fetch/:id',
+router2.get('/fetch/:id',
             authMiddleware,
             getOneSnippet
 )
 
-router.patch('/update',
+router2.patch('/update/:id',
               authMiddleware,
               validateRequest(updateSnippetSchema),
               updateSnippet
 )
 
-router.delete('/delete/:id',
+router2.delete('/delete/:id',
                 authMiddleware,
                 deleteSnippet
 )
 
-router.get('/fetchVersion/:versionId',
+router2.get('/fetchVersion/:versionId',
             authMiddleware,
             getSnippetVersion
 )
 
-router.post('/:id/versions/:versionId/restore',
+router2.post('/:id/versions/:versionId/restore',
              authMiddleware,
              validateRequest(updateSnippetSchema),
              restoreSnippet
@@ -51,4 +51,4 @@ router.post('/:id/versions/:versionId/restore',
 
 
 
-export default router;
+export default router2;

@@ -90,7 +90,14 @@ const getOneSnippet = async(req:Request,res:Response)=>{
                     }
                 ]
             },
-        })
+        });
+
+        if(oneSnippet){
+            return res.status(201).json({
+                message : "We find snippet",
+                snippet : oneSnippet
+            })
+        }
     }catch(error){
         console.log(error);
     }
