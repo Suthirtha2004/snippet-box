@@ -35,7 +35,7 @@ router2.delete('/delete/:id',
                 deleteSnippet
 )
 
-router2.get('/fetchVersion/:versionId',
+router2.get('/fetchVersion/:id/versions/:versionId',
             authMiddleware,
             getSnippetVersion
 )

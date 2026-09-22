@@ -213,17 +213,19 @@ const getSnippetVersion = async(req:Request,res:Response)=>{
         }
         
         const verId = Number(req.params.versionId);
+        const snipId = Number(req.params.id);
         const snipVersion = await prisma.snippetVersion.findFirst({
             where:{
                 id : verId,
+                snippetId : snipId,
                 snippet:{
-                    authorId : req.user.id
+                    authorId : req.user.id,
                 }
             }
         });
 
         if(snipVersion){
-            return res.status(201).json({
+            return res.status(200).json({
                 message : "Version fetched successfully",
                 data : snipVersion
             })
@@ -247,6 +249,7 @@ const restoreSnippet = async(req:Request,res:Response)=>{
         const snipVersion = await prisma.snippetVersion.findFirst({
             where :{
                 id : verId,
+                snippetId : snipId,
                 authorId : req.user.id
             }
         });
