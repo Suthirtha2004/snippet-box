@@ -42,7 +42,6 @@ router2.get('/fetchVersion/:id/versions/:versionId',
 
 router2.post('/:id/versions/:versionId/restore',
              authMiddleware,
-             validateRequest(updateSnippetSchema),
              restoreSnippet
             )
 

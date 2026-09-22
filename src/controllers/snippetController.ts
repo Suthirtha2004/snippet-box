@@ -250,7 +250,9 @@ const restoreSnippet = async(req:Request,res:Response)=>{
             where :{
                 id : verId,
                 snippetId : snipId,
-                authorId : req.user.id
+                snippet:{
+                    authorId : req.user.id
+                }
             }
         });
 
