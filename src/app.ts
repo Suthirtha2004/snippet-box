@@ -3,6 +3,7 @@ import cors from "cors";
 import router from "./routes/authRoutes";
 import cookieParser from "cookie-parser";
 import router2 from "./routes/snippetRoutes";
+import  errorMiddleware  from "./middleware/errorMiddleware.js";
 
 
 const app = express();
@@ -15,6 +16,8 @@ const snipRoute = router2;
 
 app.use("/auth",authRoute);
 app.use("/snippet",snipRoute);
+
+app.use(errorMiddleware);
 
 app.get("/",(req,res)=>{
     res.json({

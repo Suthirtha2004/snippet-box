@@ -1,10 +1,11 @@
 import {prisma} from "../../lib/prisma.js"
-import type { Request,Response } from "express";
+import type { NextFunction, Request,Response } from "express";
 import bcrypt, { genSalt } from "bcryptjs";
 import { generateToken } from "../utils/generateToken.js";
 import { success } from "zod";
+import { error } from "node:console";
 
-const register = async(req: Request,res : Response)=>{
+const register = async(req: Request,res : Response,next : NextFunction)=>{
     try{
         const {name,email,password} = req.body;
         
@@ -50,12 +51,12 @@ const register = async(req: Request,res : Response)=>{
         }
 
     }catch(error){
-        console.log(error);
+        next(error);
     }
 };
 
 
-const login = async(req:Request,res:Response) =>{
+const login = async(req:Request,res:Response,next:NextFunction) =>{
     try{
         const {email,password} = req.body;
         const userExits = await prisma.user.findUnique({
@@ -89,11 +90,11 @@ const login = async(req:Request,res:Response) =>{
                 token
         });
     }catch(error){
-        console.log(error);
+        next(error);
     }
 }
 
-const logout = async(req:Request,res:Response)=>{
+const logout = async(req:Request,res:Response,next: NextFunction)=>{
     try{
         res.cookie("jwt","",{
             httpOnly : true,
@@ -105,7 +106,7 @@ const logout = async(req:Request,res:Response)=>{
             message : "Logged out successfully"
         })
     }catch(Error){
-        console.log(Error);
+        next(error);
     }
 }
 

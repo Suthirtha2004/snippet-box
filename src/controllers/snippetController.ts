@@ -1,9 +1,9 @@
 import { version } from "node:os";
 import {prisma} from "../../lib/prisma.js";
-import type { Request,Response } from "express";
+import type { NextFunction, Request,Response } from "express";
 
 
-const createSnippet = async(req:Request,res:Response)=>{
+const createSnippet = async(req:Request,res:Response,next:NextFunction)=>{
     try{
         const {title,content,language,isPublic} = req.body;
 
@@ -31,11 +31,11 @@ const createSnippet = async(req:Request,res:Response)=>{
         }
 
     }catch(error){
-        console.log(error);
+        next(error);
     }
 }
 
-const getSnippet = async(req:Request,res:Response)=>{
+const getSnippet = async(req:Request,res:Response,next:NextFunction)=>{
     try{
         if(!req.user){
             return res.status(401).json({
@@ -64,11 +64,11 @@ const getSnippet = async(req:Request,res:Response)=>{
         }
 
     }catch(error){
-        console.log(error);
+        next(error);
     }
 }
 
-const getOneSnippet = async(req:Request,res:Response)=>{
+const getOneSnippet = async(req:Request,res:Response,next:NextFunction)=>{
     try{
         if(!req.user){
             return res.status(401).json({
@@ -99,11 +99,11 @@ const getOneSnippet = async(req:Request,res:Response)=>{
             })
         }
     }catch(error){
-        console.log(error);
+        next(error);
     }
 }
 
-const deleteSnippet = async(req : Request,res : Response)=>{
+const deleteSnippet = async(req : Request,res : Response,next:NextFunction)=>{
     try{
 
         const snipId = Number(req.params.id);
@@ -137,11 +137,11 @@ const deleteSnippet = async(req : Request,res : Response)=>{
         });
     }
     catch(error){
-        console.log(error);
+        next(error);
     }
 }
 
-const updateSnippet = async(req:Request,res:Response)=>{
+const updateSnippet = async(req:Request,res:Response,next:NextFunction)=>{
     try{
         if(!req.user){
             return res.status(401).json({
@@ -197,13 +197,13 @@ const updateSnippet = async(req:Request,res:Response)=>{
         }
     }
     catch(error){
-        console.log(error);
+        next(error);
     }
 }
 
 //Restore versions and get particular versions
 
-const getSnippetVersion = async(req:Request,res:Response)=>{
+const getSnippetVersion = async(req:Request,res:Response,next:NextFunction)=>{
     try{
 
         if(!req.user){
@@ -232,11 +232,11 @@ const getSnippetVersion = async(req:Request,res:Response)=>{
         }
 
     }catch(error){
-        console.log(error);
+        next(error);
     }
 }
 
-const restoreSnippet = async(req:Request,res:Response)=>{
+const restoreSnippet = async(req:Request,res:Response,next:NextFunction)=>{
     try{
         if(!req.user)
             return res.status(401).json({
@@ -309,7 +309,7 @@ const restoreSnippet = async(req:Request,res:Response)=>{
         }
 
     }catch(error){
-        console.log(error)
+        next(error);
     }
 }
 
